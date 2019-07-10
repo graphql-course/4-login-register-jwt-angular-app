@@ -1,4 +1,7 @@
 <h2>Formulario de inicio de sesi&oacute;n</h2>
+<div class="alert alert-warning" role="alert" *ngIf="error">
+    Los datos de inicio de sesión no son correctos
+</div>
 <form (ngSubmit)="save()" #forma="ngForm">
     <div class="form-group">
         <label for="email">Email address</label>

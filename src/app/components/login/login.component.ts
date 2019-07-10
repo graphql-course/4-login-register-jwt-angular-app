@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+
+  error: boolean;
   constructor(private api: ApiService) { }
 
   ngOnInit() {
@@ -24,9 +26,11 @@ export class LoginComponent implements OnInit {
         console.log(result);
         if (result.status === true) {
           console.log('Login correct');
+          this.error = false;
           localStorage.setItem('tokenJWT', result.token);
         } else {
           console.log(result.message);
+          this.error = true;
           localStorage.removeItem('tokenJWT');
         }
       }
