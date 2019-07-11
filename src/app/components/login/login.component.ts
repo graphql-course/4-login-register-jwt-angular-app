@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
-
+  show = false;
   error: boolean;
   constructor(private api: ApiService, private router: Router) { }
 
@@ -27,11 +27,14 @@ export class LoginComponent implements OnInit {
             console.log(result.message);
             this.router.navigate(['/me']);
           } else {
+            this.show = true;
             localStorage.removeItem('tokenJWT');
             console.log(result.message);
           }
         }
       );
+    } else {
+      this.show = true;
     }
   }
 

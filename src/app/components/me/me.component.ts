@@ -1,6 +1,7 @@
 import { Me } from './../../interfaces/me.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-me',
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeComponent implements OnInit {
   user: any;
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
     this.api.getMe().subscribe(
@@ -24,6 +25,11 @@ export class MeComponent implements OnInit {
         }
       }
     );
+  }
+
+  logout() {
+    localStorage.removeItem('tokenJWT');
+    this.router.navigate(['/login']);
   }
 
 }
