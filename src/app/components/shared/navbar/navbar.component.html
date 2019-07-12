@@ -6,10 +6,10 @@
   <a class="navbar-brand" href="#">GraphQL JWT</a>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active" routerLinkActive="active">
+      <li class="nav-item active" routerLinkActive="active" *ngIf="access">
         <a class="nav-link" [routerLink]="['me']">Personal <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active" *ngIf="!access">
         <a class="nav-link" [routerLink]="['login']">Login</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
@@ -17,8 +17,8 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-info my-2 my-sm-0" type="button">Iniciar Sesión</button>&nbsp;&nbsp;
-      <button class="btn btn-outline-danger my-2 my-sm-0" type="button">Cerrar Sesión</button>
+      <button class="btn btn-outline-info my-2 my-sm-0" type="button" *ngIf="!access">Iniciar Sesión</button>&nbsp;&nbsp;
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="button" *ngIf="access">Cerrar Sesión</button>
     </form>
   </div>
 </nav>

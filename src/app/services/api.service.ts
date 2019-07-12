@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { getUsers, login, meData } from '../operations/query';
+import { getUsers, login } from '../operations/query';
 import { map } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -41,21 +40,4 @@ export class ApiService {
     }));
   }
 
-  // nuestra info con el tokn
-  getMe() {
-    return this.apollo
-    .watchQuery(
-      {
-        query: meData,
-        fetchPolicy: 'network-only',
-        context: {
-          headers: new HttpHeaders({
-            authorization: localStorage.getItem('tokenJWT')
-          })
-        }
-      }
-    ).valueChanges.pipe(map((result: any) => {
-      return result.data.me;
-    }));
-  }
 }
