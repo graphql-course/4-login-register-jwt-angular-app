@@ -1,0 +1,14 @@
+<div class="row" *ngIf="user">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.name }} {{ user.lastname }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+                <p class="card-text">{{ user.registerDate }}</p>
+                <button (click)="logout()" class="btn btn-outline-info">Cerrar sesi&oacute;n</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>

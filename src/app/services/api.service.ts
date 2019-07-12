@@ -42,7 +42,7 @@ export class ApiService {
   }
 
   // nuestra info con el tokn
-  getMe(token: string) {
+  getMe() {
     return this.apollo
     .watchQuery(
       {
@@ -50,7 +50,7 @@ export class ApiService {
         fetchPolicy: 'network-only',
         context: {
           headers: new HttpHeaders({
-            authorization: token
+            authorization: localStorage.getItem('tokenJWT')
           })
         }
       }

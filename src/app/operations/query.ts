@@ -10,6 +10,7 @@ query {
       name
       lastname
       email
+      registerDate
     }
   }
 }
