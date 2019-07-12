@@ -1,6 +1,9 @@
 import { LoginData, LoginResult } from './login.interface';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TOKEN_JWT } from 'src/app/app.constants';
+import { Me } from '../me/me.interface';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +16,20 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
+    if (localStorage.getItem(TOKEN_JWT) !== null) {
+      this.api.getMe().subscribe((result: Me) => {
+        if (result.status) {
+          console.log(result.user);
+          this.router.navigate(['/me']);
+        } else {
+          console.log(result.message);
+          localStorage.removeItem(TOKEN_JWT);
+        }
+      });
+    }
   }
 
   save() {
@@ -24,9 +38,12 @@ export class LoginComponent implements OnInit {
       if (result.status) {
         console.log(result.message);
         this.error = false;
+        localStorage.setItem(TOKEN_JWT, result.token);
+        this.router.navigate(['/me']);
       } else {
         console.log(result.message);
         this.error = true;
+        localStorage.removeItem(TOKEN_JWT);
       }
     });
   }
