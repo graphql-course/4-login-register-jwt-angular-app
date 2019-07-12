@@ -1,7 +1,7 @@
-import { Me } from './../../interfaces/me.interface';
-import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { MeData } from './me.interface';
 
 @Component({
   selector: 'app-me',
@@ -13,20 +13,19 @@ export class MeComponent implements OnInit {
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null) {
-      this.api.getMe().subscribe(
-        (result: Me) => {
-          console.log(result);
-          if (result.status) {
-            console.log(result.message);
-            this.user = result.user;
-          } else {
-            localStorage.removeItem('tokenJWT');
-            console.log(result.message);
-          }
+    // Tenemos token
+    if (localStorage.getItem('tokenJWT') !== null ) {
+      this.api.getMe().subscribe((result: MeData) => {
+        if (result.status) {
+          console.log(result.user);
+          this.user = result.user;
+        } else {
+          console.log('token no valido');
+          localStorage.removeItem('tokenJWT');
+          this.logout();
         }
-      );
-    } else {
+      });
+    } else { // No hay token
       this.logout();
     }
   }

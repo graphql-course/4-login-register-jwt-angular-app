@@ -1,8 +1,10 @@
 import { Me } from './../../interfaces/me.interface';
 import { Login } from './../../interfaces/login.interface';
 import { Component, OnInit } from '@angular/core';
+import { LoginData, LoginResult } from './login.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { MeData } from '../me/me.interface';
 
 @Component({
   selector: 'app-login',
@@ -10,29 +12,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: any = {
+  user: LoginData = {
     email: '',
     password: ''
   };
-  show = false;
   error: boolean;
+  show: boolean;
   constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null) {
-      this.api.getMe().subscribe(
-        (result: Me) => {
-          console.log(result);
-          if (result.status) {
-            console.log(result.message);
-            this.router.navigate(['/me']);
-          } else {
-            this.show = true;
-            localStorage.removeItem('tokenJWT');
-            console.log(result.message);
-          }
+    if (localStorage.getItem('tokenJWT') !== null ) {
+      this.api.getMe().subscribe((result: MeData) => {
+        if (result.status) {
+          console.log(result.user);
+          this.router.navigate(['/me']);
         }
-      );
+      });
     } else {
       this.show = true;
     }
@@ -40,21 +35,20 @@ export class LoginComponent implements OnInit {
 
   save() {
     console.log(this.user);
-    this.api.login(this.user.email, this.user.password).subscribe(
-      (result: Login) => {
-        console.log(result);
-        if (result.status === true) {
-          console.log('Login correct');
-          this.error = false;
-          localStorage.setItem('tokenJWT', result.token);
-          this.router.navigate(['/me']);
-        } else {
-          console.log(result.message);
-          this.error = true;
-          localStorage.removeItem('tokenJWT');
-        }
+
+    this.api.login(this.user.email, this.user.password).subscribe( (result: LoginResult) => {
+      this.show = true;
+      if (result.status) {
+        this.error = false;
+        localStorage.setItem('tokenJWT', result.token);
+        console.log('login correcto');
+        this.router.navigate(['/me']);
+      } else {
+        this.error = true;
+        localStorage.removeItem('tokenJWT');
+        console.log('login incorrecto');
       }
-    );
+    });
   }
 
 }
