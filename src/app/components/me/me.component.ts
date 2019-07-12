@@ -11,8 +11,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 })
 export class MeComponent implements OnInit {
   user: any;
-  constructor(private api: ApiService, private auth: AuthorizationService,
-              private router: Router) { }
+  constructor(private auth: AuthorizationService) { }
 
   ngOnInit() {
     // Tenemos token
@@ -33,8 +32,6 @@ export class MeComponent implements OnInit {
 
   logout() {
     this.auth.updateBooleanSubject(false);
-    localStorage.removeItem('tokenJWT');
-    this.router.navigate(['/login']);
   }
 
 }
