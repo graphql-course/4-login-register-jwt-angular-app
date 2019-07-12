@@ -35,8 +35,6 @@ export class LoginComponent implements OnInit {
   }
 
   save() {
-    console.log(this.user);
-
     this.api.login(this.user.email, this.user.password).subscribe( (result: LoginResult) => {
       this.show = true;
       if (result.status) {

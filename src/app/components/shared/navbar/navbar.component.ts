@@ -22,7 +22,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.getMe().subscribe((result: MeData) => {
+    if (localStorage.getItem('loginJWT') !== null) {
+      this.auth.getMe().subscribe((result: MeData) => {
       if (result.status) {
         this.access = true;
       } else {
@@ -30,6 +31,8 @@ export class NavbarComponent implements OnInit {
       }
       console.log(this.access);
     });
+    }
+
   }
 
   logout() {
