@@ -37,7 +37,11 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('tokenJWT');
-    this.router.navigate(['/login']);
+    this.access = false;
+    const currentRouter = this.router.url;
+    if (currentRouter !== '/users' && currentRouter !== '/register') {
+      this.router.navigate(['/login']);
+    }
   }
 
 

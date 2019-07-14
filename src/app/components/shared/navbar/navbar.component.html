@@ -13,11 +13,14 @@
                 <a class="nav-link" [routerLink]="['login']" *ngIf="!access">Login</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['register']" *ngIf="!access">Register</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['users']">Users</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-outline-danger my-2 my-sm-0" *ngIf="access" type="button">Cerrar Sesi&oacute;n</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()" *ngIf="access" type="button">Cerrar Sesi&oacute;n</button>
         </form>
     </div>
 </nav>
