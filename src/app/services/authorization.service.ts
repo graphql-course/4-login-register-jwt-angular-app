@@ -14,8 +14,8 @@ export class AuthorizationService {
   public accessVar$ = this.accessVar.asObservable();
   constructor(private apollo: Apollo) { }
 
-  public updateBooleanSubject(newStringVar: boolean) {
-    this.accessVar.next(newStringVar);
+  public updateBooleanSubject(newBooleanVar: boolean) {
+    this.accessVar.next(newBooleanVar);
   }
 
   getMe() {

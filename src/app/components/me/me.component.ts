@@ -20,8 +20,10 @@ export class MeComponent implements OnInit {
         if (result.status) {
           console.log(result.user);
           this.user = result.user;
+          this.auth.updateBooleanSubject(true);
         } else {
           console.log('token no valido');
+          this.auth.updateBooleanSubject(false);
           this.logout();
         }
       });

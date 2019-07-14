@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
-import { User } from './user.interface';
-import { AuthorizationService } from 'src/app/services/authorization.service';
 import { MeData } from '../me/me.interface';
+import { ApiService } from 'src/app/services/api.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class UsersComponent implements OnInit {
-  users: User[];
+export class RegisterComponent implements OnInit {
+
   constructor(private api: ApiService, private auth: AuthorizationService) {
     if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
@@ -24,11 +23,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.api.getUsers().subscribe((result: User[]) => {
-      this.users = result;
-      console.log(this.users);
-    });
   }
 
 }

@@ -11,12 +11,11 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   access: boolean;
   constructor(private auth: AuthorizationService, private router: Router) {
-    this.auth.accessVar$.subscribe( data => {
-      console.log('header', data);
+    this.auth.accessVar$.subscribe(data => {
+      console.log('Session state', data);
       this.access = data;
       if (data === false) {
-        localStorage.removeItem('tokenJWT');
-        this.router.navigate(['/login']);
+        this.logout();
       }
     });
   }
@@ -24,19 +23,23 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('loginJWT') !== null) {
       this.auth.getMe().subscribe((result: MeData) => {
-      if (result.status) {
-        this.access = true;
-      } else {
-        this.access = false;
-      }
-      console.log(this.access);
-    });
+        if (result.status) {
+          this.access = true;
+        } else {
+          this.access = false;
+        }
+      });
     }
-
   }
 
   logout() {
     this.access = false;
+    localStorage.removeItem('tokenJWT');
+    const currentRouter = this.router.url;
+    console.log(currentRouter);
+    if (currentRouter !== '/users' && currentRouter !== '/register') {
+      this.router.navigate(['/login']);
+    }
   }
 
 }
