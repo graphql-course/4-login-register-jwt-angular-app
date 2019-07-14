@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
-import { Router } from '@angular/router';
 import { MeData } from './me.interface';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 

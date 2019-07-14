@@ -1,7 +1,7 @@
 export interface RegisterResult {
     status: boolean;
     message: string;
-    token?: string;
+    user?: any;
 }
 
 export interface RegisterData {
