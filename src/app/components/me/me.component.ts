@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MeComponent implements OnInit {
   user: any;
-  constructor(private api: ApiService, private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
     // Tenemos token
@@ -19,10 +19,10 @@ export class MeComponent implements OnInit {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           console.log(result.user);
+          this.auth.updateAccess(true);
           this.user = result.user;
         } else {
           console.log('token no valido');
-          localStorage.removeItem('tokenJWT');
           this.logout();
         }
       });
@@ -32,6 +32,7 @@ export class MeComponent implements OnInit {
   }
 
   logout() {
+    this.auth.updateAccess(false);
     localStorage.removeItem('tokenJWT');
     this.router.navigate(['/login']);
   }

@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           console.log(result.user);
+          this.auth.updateAccess(true);
           this.router.navigate(['/me']);
         }
       });
@@ -41,9 +42,11 @@ export class LoginComponent implements OnInit {
         this.error = false;
         localStorage.setItem('tokenJWT', result.token);
         console.log('login correcto');
+        this.auth.updateAccess(true);
         this.router.navigate(['/me']);
       } else {
         this.error = true;
+        this.auth.updateAccess(false);
         localStorage.removeItem('tokenJWT');
         console.log('login incorrecto');
       }
