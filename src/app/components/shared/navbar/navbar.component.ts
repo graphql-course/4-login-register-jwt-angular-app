@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  logout() { 
+  logout() {
     this.auth.logout();
   }
 
