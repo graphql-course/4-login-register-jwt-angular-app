@@ -20,16 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(private api: ApiService, private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null ) {
-      this.auth.getMe().subscribe((result: MeData) => {
-        if (result.status) {
-          console.log(result.user);
-          this.router.navigate(['/me']);
-        }
-      });
-    } else {
-      this.show = true;
-    }
+    this.auth.start();
+    this.show = true;
   }
 
   save() {

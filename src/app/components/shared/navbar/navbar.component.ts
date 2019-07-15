@@ -18,14 +18,13 @@ export class NavbarComponent implements OnInit {
         this.access = false;
         this.logout();
       } else {
-        this.access = true;
+        this.access = data;
       }
     });
   }
 
-  logout() {
-    localStorage.removeItem('tokenJWT');
-    this.router.navigate(['/login']);
+  logout() { 
+    this.auth.logout();
   }
 
   ngOnInit() {

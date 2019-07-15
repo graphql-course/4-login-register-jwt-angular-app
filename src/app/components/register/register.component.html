@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-lg"></div>
+    <div class="col-lg-4">
+        <div class="alert alert-success" role="alert" *ngIf="operation == 1">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="operation == 2">
+                {{ message }}
+        </div>
+        <h2>Registro de usuario</h2>
+        <form (ngSubmit)="save()" #forma="ngForm">
+            <div class="form-group">
+                <label for="name">name address</label>
+                <input name="name" #name="ngModel" [(ngModel)]="register.name" type="name" class="form-control"
+                    id="name" aria-describedby="nameHelp" placeholder="Enter name"
+                    [ngClass]="{'is-valid': !name.invalid, 'is-invalid': name.invalid }" required>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        name necesario
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname">lastname address</label>
+                <input name="lastname" #lastname="ngModel" [(ngModel)]="register.lastname" type="lastname" class="form-control"
+                    id="lastname" aria-describedby="lastnameHelp" placeholder="Enter lastname"
+                    [ngClass]="{'is-valid': !lastname.invalid, 'is-invalid': lastname.invalid }" required>
+                <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
+                    <div *ngIf="lastname.errors.required">
+                        lastname necesario
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input name="email" #email="ngModel" [(ngModel)]="register.email" type="email" class="form-control"
+                    id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                    [ngClass]="{'is-valid': !email.invalid, 'is-invalid': email.invalid }" required
+                    pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                        Email necesario
+                    </div>
+                    <div *ngIf="email.errors && email.errors.pattern">
+                        Email no correcto
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" [ngClass]="{'is-valid': !password.invalid, 'is-invalid': password.invalid }"
+                    required #password="ngModel" [(ngModel)]="register.password" type="password" class="form-control"
+                    id="password" placeholder="Password">
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                    <div *ngIf="password.errors.required">
+                        password necesario
+                    </div>
+                </div>
+            </div>
+
+            <button [disabled]="!forma.valid" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="col-lg"></div>
+</div>
