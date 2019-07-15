@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null ) {
+    this.auth.start();
+    this.show = true;
+    /*if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           this.auth.updateBooleanSubject(true);
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.show = true;
       this.auth.updateBooleanSubject(false);
-    }
+    }*/
   }
 
   save() {

@@ -12,22 +12,23 @@ export class MeComponent implements OnInit {
   constructor(private auth: AuthorizationService) { }
 
   ngOnInit() {
+
+    this.auth.start();
     // Tenemos token
     this.auth.getMe().subscribe((result: MeData) => {
       if (result.status) {
-        console.log(result.user);
         this.user = result.user;
         this.auth.updateBooleanSubject(true);
       } else {
         console.log('token no valido');
-        this.auth.updateBooleanSubject(false);
-        this.logout();
+        // this.auth.updateBooleanSubject(false);
+        // this.logout();
       }
     });
   }
 
   logout() {
-    this.auth.updateBooleanSubject(false);
+    this.auth.logout();
   }
 
 }

@@ -12,7 +12,8 @@ import { MeData } from '../me/me.interface';
 export class UsersComponent implements OnInit {
   users: User[];
   constructor(private api: ApiService, private auth: AuthorizationService) {
-    if (localStorage.getItem('tokenJWT') !== null ) {
+    this.auth.start();
+    /*if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           this.auth.updateBooleanSubject(true);
@@ -20,7 +21,7 @@ export class UsersComponent implements OnInit {
       });
     } else {
       this.auth.updateBooleanSubject(false);
-    }
+    }*/
   }
 
   ngOnInit() {

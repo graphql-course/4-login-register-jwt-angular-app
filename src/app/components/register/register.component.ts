@@ -19,7 +19,7 @@ export class RegisterComponent {
   resultOperation: number;
   message: string;
   constructor(private api: ApiService, private auth: AuthorizationService) {
-    if (localStorage.getItem('tokenJWT') !== null ) {
+    /*if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           this.auth.updateBooleanSubject(true);
@@ -27,7 +27,8 @@ export class RegisterComponent {
       });
     } else {
       this.auth.updateBooleanSubject(false);
-    }
+    }*/
+    this.auth.start();
   }
 
   save() {
