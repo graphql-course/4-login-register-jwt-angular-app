@@ -13,21 +13,17 @@ export class MeComponent implements OnInit {
 
   ngOnInit() {
     // Tenemos token
-    if (localStorage.getItem('tokenJWT') !== null) {
-      this.auth.getMe().subscribe((result: MeData) => {
-        if (result.status) {
-          console.log(result.user);
-          this.user = result.user;
-          this.auth.updateBooleanSubject(true);
-        } else {
-          console.log('token no valido');
-          this.auth.updateBooleanSubject(false);
-          this.logout();
-        }
-      });
-    } else { // No hay token
-      this.logout();
-    }
+    this.auth.getMe().subscribe((result: MeData) => {
+      if (result.status) {
+        console.log(result.user);
+        this.user = result.user;
+        this.auth.updateBooleanSubject(true);
+      } else {
+        console.log('token no valido');
+        this.auth.updateBooleanSubject(false);
+        this.logout();
+      }
+    });
   }
 
   logout() {

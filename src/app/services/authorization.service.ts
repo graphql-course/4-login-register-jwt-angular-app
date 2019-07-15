@@ -26,7 +26,7 @@ export class AuthorizationService {
           fetchPolicy: 'network-only',
           context: {
             headers: new HttpHeaders({
-              authorization: localStorage.getItem('tokenJWT')
+              authorization: (localStorage.getItem('tokenJWT') !== null) ? localStorage.getItem('tokenJWT') : ''
             })
           }
         }

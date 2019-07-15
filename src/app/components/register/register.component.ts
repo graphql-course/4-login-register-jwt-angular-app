@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MeData } from '../me/me.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -9,7 +9,7 @@ import { RegisterData, RegisterResult } from './register.interface';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   register: RegisterData = {
     name: '',
     lastname: '',
@@ -28,9 +28,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.auth.updateBooleanSubject(false);
     }
-  }
-
-  ngOnInit() {
   }
 
   save() {
