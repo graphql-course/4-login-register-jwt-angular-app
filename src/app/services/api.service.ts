@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { getUsers, login, meData } from '../operations/query';
 import { map } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
+import { RegisterData } from '../components/register/register.interface';
+import { registerData } from '../operations/mutation';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,15 @@ export class ApiService {
     ).valueChanges.pipe(map((result: any) => {
       return result.data.login;
     }));
+  }
+
+  register(user: RegisterData) {
+    return this.apollo
+      .mutate({
+        mutation: registerData,
+        variables: {
+          user
+        }
+      });
   }
 }
