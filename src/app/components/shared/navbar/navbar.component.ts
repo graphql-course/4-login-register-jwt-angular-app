@@ -24,26 +24,11 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    // this.auth.updateBooleanSubject(false);
-    // localStorage.setItem('closeSession', '1');
     console.log('logout!!');
     this.auth.logout();
   }
 
   ngOnInit() {
-    /*if (localStorage.getItem('tokenJWT') !== null ) {
-      this.auth.getMe().subscribe((result: MeData) => {
-        if (result.status) {
-          this.access = true;
-        } else {
-          this.access = false;
-        }
-        console.log( 'getme', this.access);
-      });
-    } else { // No hay token
-      this.access = false;
-      console.log('notgetm', this.access);
-    }*/
     this.auth.start();
   }
 
