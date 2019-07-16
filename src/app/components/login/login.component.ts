@@ -17,20 +17,17 @@ export class LoginComponent implements OnInit {
   };
   error: boolean;
   show: boolean;
-  constructor(private api: ApiService, private router: Router, private auth: AuthService) { }
+  constructor(private api: ApiService, private router: Router, private auth: AuthService) {
+    this.auth.userVar$.subscribe((data: MeData) => {
+      if (data === null || data.status === false) {
+        console.log(data);
+        this.show = true;
+      }
+    });
+  }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null ) {
-      this.auth.getMe().subscribe((result: MeData) => {
-        if (result.status) {
-          this.auth.updateStateSession(true);
-          this.router.navigate(['/me']);
-        }
-      });
-    } else {
-      this.show = true;
-      this.auth.updateStateSession(false);
-    }
+    this.auth.start();
   }
 
   save() {

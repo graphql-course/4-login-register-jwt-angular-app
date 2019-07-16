@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   constructor(private api: ApiService, private auth: AuthService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null ) {
+    /*if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           this.auth.updateStateSession(true);
@@ -24,7 +24,8 @@ export class UsersComponent implements OnInit {
       });
     } else { // No hay token
       this.auth.updateStateSession(false);
-    }
+    }*/
+    this.auth.start();
     this.api.getUsers().subscribe((result: User[]) => {
       this.users = result;
       console.log(this.users);

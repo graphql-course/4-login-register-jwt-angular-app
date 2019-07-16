@@ -1,3 +1,6 @@
+import { LoginResult } from './../components/login/login.interface';
+import { Router } from '@angular/router';
+import { MeData } from './../components/me/me.interface';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { meData } from '../operations/query';
@@ -11,10 +14,16 @@ import { Subject } from 'rxjs/internal/Subject';
 export class AuthService {
   public accessVar = new Subject<boolean>();
   public accessVar$ = this.accessVar.asObservable();
-  constructor(private apollo: Apollo) { }
+  public userVar = new Subject<MeData>();
+  public userVar$ = this.userVar.asObservable();
+  constructor(private apollo: Apollo, private router: Router) { }
 
   public updateStateSession(newValue: boolean) {
     this.accessVar.next(newValue);
+  }
+
+  public updateUserData(newValue: MeData) {
+    this.userVar.next(newValue);
   }
 
   // Obtener nuestro usuario y datos con el token
@@ -34,4 +43,35 @@ export class AuthService {
       return result.data.me;
     }));
   }
+
+  sincroValues(result: MeData, state: boolean) {
+    this.updateUserData(result);
+    this.updateStateSession(state);
+  }
+
+  start() {
+    if (localStorage.getItem('tokenJWT') !== null ) {
+      this.getMe().subscribe((result: MeData) => {
+        if (result.status) {
+          if (this.router.url === '/login') {
+            this.sincroValues(result, true);
+            this.router.navigate(['/me']);
+          }
+        }
+        this.sincroValues(result, result.status);
+      });
+    } else {
+      this.sincroValues(null, false);
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('tokenJWT');
+    this.updateStateSession(false);
+    const currentRouter = this.router.url;
+    if (currentRouter !== '/users' && currentRouter !== '/register') {
+      this.router.navigate(['/login']);
+    }
+  }
+
 }

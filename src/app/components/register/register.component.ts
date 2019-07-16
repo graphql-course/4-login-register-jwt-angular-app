@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(private auth: AuthService, private api: ApiService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null ) {
+    /*if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           this.auth.updateStateSession(true);
@@ -31,7 +31,8 @@ export class RegisterComponent implements OnInit {
       });
     } else {
       this.auth.updateStateSession(false);
-    }
+    }*/
+    this.auth.start();
   }
 
   save() {
