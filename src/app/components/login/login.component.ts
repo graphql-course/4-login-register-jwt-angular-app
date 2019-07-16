@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
       if (data === null || data.status === false) {
         console.log(data);
         this.show = true;
+      } else {
+        this.show = false;
       }
     });
   }
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit {
         this.auth.updateStateSession(false);
         console.log('login incorrecto');
       }
-    });
+});
   }
 
 }

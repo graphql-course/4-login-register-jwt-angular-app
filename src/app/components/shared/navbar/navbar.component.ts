@@ -24,6 +24,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    // this.auth.updateBooleanSubject(false);
+    // localStorage.setItem('closeSession', '1');
+    console.log('logout!!');
     this.auth.logout();
   }
 
