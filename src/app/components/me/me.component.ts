@@ -24,9 +24,7 @@ export class MeComponent implements OnInit {
   }
 
   logout() {
-    this.auth.updateStateSession(false);
-    localStorage.removeItem('tokenJWT');
-    this.router.navigate(['/login']);
+    this.auth.logout();
   }
 
 }
