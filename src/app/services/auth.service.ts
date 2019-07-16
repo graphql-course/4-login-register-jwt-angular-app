@@ -1,4 +1,3 @@
-import { LoginResult } from './../components/login/login.interface';
 import { Router } from '@angular/router';
 import { MeData } from './../components/me/me.interface';
 import { Injectable } from '@angular/core';

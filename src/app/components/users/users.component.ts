@@ -16,7 +16,6 @@ export class UsersComponent implements OnInit {
     this.auth.start();
     this.api.getUsers().subscribe((result: User[]) => {
       this.users = result;
-      console.log(this.users);
     });
   }
 

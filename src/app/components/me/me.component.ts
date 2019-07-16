@@ -18,13 +18,10 @@ export class MeComponent implements OnInit {
       }
     });
   }
-
   ngOnInit() {
     this.auth.start();
   }
-
   logout() {
     this.auth.logout();
   }
-
 }
