@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { getUsers, login } from '../operations/query';
 import { map } from 'rxjs/operators';
 import { RegisterData } from '../components/register/register.interface';
-import { addUser } from '../operations/mutation';
+import { registerData } from '../operations/mutation';
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +42,10 @@ export class ApiService {
       }));
   }
 
-  addUser(user: RegisterData) {
+  register(user: RegisterData) {
     return this.apollo
       .mutate({
-        mutation: addUser,
+        mutation: registerData,
         variables: {
           user
         }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { MeData } from '../../me/me.interface';
 import { Router } from '@angular/router';
 
@@ -10,34 +10,41 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   access: boolean;
-  constructor(private auth: AuthorizationService, private router: Router) {
-    this.auth.accessVar$.subscribe(data => {
-      console.log('Session state', data);
-      this.access = data;
-      if (data === false) {
+  constructor(private auth: AuthService, private router: Router) {
+    this.auth.accessVar$.subscribe((data: boolean) => {
+      console.log('session state', data);
+
+      if ( data === false && this.access) {
+        this.access = false;
         this.logout();
+      } else {
+        this.access = data;
       }
     });
   }
 
+  logout() {
+    this.auth.updateStateSession(false);
+    localStorage.removeItem('tokenJWT');
+    const currentRouter = this.router.url;
+    if (currentRouter !== '/register' && currentRouter !== '/users') {
+      this.router.navigate(['/login']);
+    }
+  }
+
   ngOnInit() {
-    if (localStorage.getItem('loginJWT') !== null) {
+    if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           this.access = true;
         } else {
           this.access = false;
         }
+        console.log( 'getme', this.access);
       });
-    }
-  }
-
-  logout() {
-    this.access = false;
-    localStorage.removeItem('tokenJWT');
-    const currentRouter = this.router.url;
-    if (currentRouter !== '/users' && currentRouter !== '/register') {
-      this.router.navigate(['/login']);
+    } else { // No hay token
+      this.access = false;
+      console.log('notgetm', this.access);
     }
   }
 

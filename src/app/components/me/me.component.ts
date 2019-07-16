@@ -1,6 +1,7 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MeData } from './me.interface';
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-me',
@@ -9,19 +10,19 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 })
 export class MeComponent implements OnInit {
   user: any;
-  constructor(private auth: AuthorizationService) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
     // Tenemos token
-    if (localStorage.getItem('tokenJWT') !== null) {
+    if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
           console.log(result.user);
           this.user = result.user;
-          this.auth.updateBooleanSubject(true);
+          this.auth.updateStateSession(true);
         } else {
           console.log('token no valido');
-          this.auth.updateBooleanSubject(false);
+          this.auth.updateStateSession(false);
           this.logout();
         }
       });
@@ -31,7 +32,9 @@ export class MeComponent implements OnInit {
   }
 
   logout() {
-    this.auth.updateBooleanSubject(false);
+    this.auth.updateStateSession(false);
+    localStorage.removeItem('tokenJWT');
+    this.router.navigate(['/login']);
   }
 
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { MeData } from '../me/me.interface';
-import { ApiService } from 'src/app/services/api.service';
-import { AuthorizationService } from 'src/app/services/authorization.service';
 import { RegisterData, RegisterResult } from './register.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-register',
@@ -10,39 +10,47 @@ import { RegisterData, RegisterResult } from './register.interface';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  operation: number;
+  message: string;
   register: RegisterData = {
     name: '',
     lastname: '',
     email: '',
     password: ''
   };
-  resultOperation: number;
-  message: string;
-  constructor(private api: ApiService, private auth: AuthorizationService) {
+  constructor(private auth: AuthService, private api: ApiService) { }
+
+  ngOnInit() {
     if (localStorage.getItem('tokenJWT') !== null ) {
       this.auth.getMe().subscribe((result: MeData) => {
         if (result.status) {
-          this.auth.updateBooleanSubject(true);
+          this.auth.updateStateSession(true);
+        } else {
+          this.auth.updateStateSession(false);
         }
       });
     } else {
-      this.auth.updateBooleanSubject(false);
+      this.auth.updateStateSession(false);
     }
-  }
-
-  ngOnInit() {
   }
 
   save() {
     console.log(this.register);
-    this.api.addUser(this.register).subscribe(({ data }) => {
-      this.resultOperation = 1;
+
+    this.api.register(this.register).subscribe(({data}) => {
+      console.log(data);
       const userResult: RegisterResult = data.register;
-      this.message = `Usuario ${userResult.user.name} ${userResult.user.lastname} registrado`;
+      if (userResult.status) {
+        this.operation = 1;
+      } else {
+        this.operation = 2;
+      }
+      this.message = userResult.message;
+
     }, (error) => {
-      this.resultOperation = 2;
-      console.log('error enviando la query', error);
-      this.message = 'Error inesperado en el registro. Prueba de nuevo.';
+      console.log('error enviando el query: ', error);
+      this.operation = 3;
+      this.message = 'Error inesperado';
     });
   }
 

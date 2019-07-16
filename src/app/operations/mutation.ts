@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const addUser = gql`
+export const registerData = gql`
     mutation addUser($user: UserInput!) {
         register(user: $user) {
             status
