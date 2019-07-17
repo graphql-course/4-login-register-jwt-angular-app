@@ -4,3 +4,18 @@
 .container {
     margin-top: 25px;
 }
+
+#login-form, #register-form {
+    background-color: #f2f3f4;
+    padding: 40px;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 8px;
+    -webkit-box-shadow: 7px 7px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 7px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 7px 7px 7px 0px rgba(0,0,0,0.75);
+}
+
+.btn-primary {
+    background-color: #2279a2;
+}
