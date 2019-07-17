@@ -16,6 +16,11 @@
     box-shadow: 7px 7px 7px 0px rgba(0,0,0,0.75);
 }
 
+#form-title {
+    border-bottom: 1px gray dotted;
+    padding-bottom: 4px;
+}
+
 .btn-primary {
     background-color: #2279a2;
 }
