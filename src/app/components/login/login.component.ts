@@ -17,25 +17,27 @@ export class LoginComponent implements OnInit {
   };
   error: boolean;
   show: boolean;
-  constructor(private api: ApiService, private router: Router, private auth: AuthService) { }
+  constructor(private api: ApiService, private router: Router, private auth: AuthService) {
+    this.auth.userVar$.subscribe((data: MeData) => {
+      // Mostrar si sesión cerrada
+      if (data === null || data.status === false) {
+        console.log(data);
+        this.show = true;
+      } else {
+        this.show = false;
+      }
+    });
+
+  }
 
   ngOnInit() {
-    if (localStorage.getItem('tokenJWT') !== null ) {
-      this.auth.getMe().subscribe((result: MeData) => {
-        if (result.status) {
-          console.log(result.user);
-          this.router.navigate(['/me']);
-        }
-      });
-    } else {
-      this.show = true;
-    }
+    this.auth.start();
   }
 
   save() {
     console.log(this.user);
 
-    this.api.login(this.user.email, this.user.password).subscribe( (result: LoginResult) => {
+    this.api.login(this.user.email, this.user.password).subscribe((result: LoginResult) => {
       this.show = true;
       if (result.status) {
         this.error = false;

@@ -11,30 +11,21 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MeComponent implements OnInit {
   user: any;
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService) {
+    this.auth.userVar$.subscribe((data: MeData) => {
+      // Añadimos la información del usuario si tenemos la sesion iniciada
+      if (data !== null && data !== undefined) {
+        this.user = data.user;
+      }
+    });
+  }
 
   ngOnInit() {
-    // Tenemos token
-    if (localStorage.getItem('tokenJWT') !== null ) {
-      this.auth.getMe().subscribe((result: MeData) => {
-        if (result.status) {
-          console.log(result.user);
-          this.user = result.user;
-        } else {
-          console.log('token no valido');
-          localStorage.removeItem('tokenJWT');
-          this.logout();
-        }
-      });
-    } else { // No hay token
-      this.logout();
-    }
+    this.auth.start();
   }
 
   logout() {
-    this.auth.updateStateSession(false);
-    localStorage.removeItem('tokenJWT');
-    this.router.navigate(['/login']);
+    this.auth.logout();
   }
 
 }
