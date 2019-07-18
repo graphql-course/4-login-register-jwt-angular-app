@@ -1,10 +1,10 @@
 <div class="row" *ngIf="show">
     <div class="col-lg"></div>
-    <div class="col-lg-4">
+    <div class="col-lg-4" id="form">
         <div class="alert alert-warning" role="alert" *ngIf="error">
             Los credenciales introducidos no son los correctos
         </div>
-        <h2>Formulario de inicio de sesi&oacute;n</h2>
+        <h2 id="form-title">Inicio de sesi&oacute;n</h2>
         <form (ngSubmit)="save()" #forma="ngForm">
             <div class="form-group">
                 <label for="email">Email address</label>

@@ -4,6 +4,8 @@ import { meData } from '../operations/query';
 import { HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs/internal/Subject';
+import { MeData } from '../components/me/me.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,46 @@ import { Subject } from 'rxjs/internal/Subject';
 export class AuthService {
   public accessVar = new Subject<boolean>();
   public accessVar$ = this.accessVar.asObservable();
-  constructor(private apollo: Apollo) { }
+  public userVar = new Subject<MeData>();
+  public userVar$ = this.userVar.asObservable();
+  constructor(private apollo: Apollo, private router: Router) { }
 
   public updateStateSession(newValue: boolean) {
     this.accessVar.next(newValue);
   }
+  public updateUser(newValue: MeData) {
+    this.userVar.next(newValue);
+  }
 
+  logout() {
+    this.updateStateSession(false);
+    localStorage.removeItem('tokenJWT');
+    const currentRouter = this.router.url;
+    if (currentRouter !== '/register' && currentRouter !== '/users') {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  private sincroValues(result: MeData, state: boolean) {
+    this.updateStateSession(state);
+    this.updateUser(result);
+  }
+
+  start() {
+    if (localStorage.getItem('tokenJWT') !== null ) {
+      this.getMe().subscribe((result: MeData) => {
+        if (result.status) {
+          if (this.router.url === '/login') {
+            this.sincroValues(result, true);
+            this.router.navigate(['/me']);
+          }
+        }
+        this.sincroValues(result, result.status);
+      });
+    } else { // No hay token
+      this.sincroValues(null, false);
+    }
+  }
   // Obtener nuestro usuario y datos con el token
   getMe() {
     return this.apollo

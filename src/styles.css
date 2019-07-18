@@ -4,3 +4,23 @@
 .container {
     margin-top: 25px;
 }
+
+#form {
+    background-color: #f2f3f4;
+    padding: 40px;
+    margin: 0 auto;
+    border-radius: 10px;
+    -webkit-box-shadow: 19px 23px 11px -12px rgba(166,161,166,1);
+    -moz-box-shadow: 19px 23px 11px -12px rgba(166,161,166,1);
+    box-shadow: 19px 23px 11px -12px rgba(166,161,166,1);
+}
+
+#form-title {
+    border-bottom: 1px gray dotted;
+    padding-bottom: 4px;
+    color: darkgrey
+}
+
+.btn-primary {
+    background-color: #2279a2;
+}
