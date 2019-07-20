@@ -13,7 +13,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 export class GraphqlModule {
   constructor(apollo: Apollo, httpLink: HttpLink) {
     apollo.create({
-      link: httpLink.create({ uri: 'https://graphql-jwt.herokuapp.com/graphql'}),
+      link: httpLink.create({ uri: 'https://sistema-jwt.herokuapp.com/graphql'}),
       cache: new InMemoryCache()
     });
   }
