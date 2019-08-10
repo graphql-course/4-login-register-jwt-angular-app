@@ -1,4 +1,5 @@
-<div class="row">
+<app-loading *ngIf="complete"></app-loading>
+<div class="row" *ngIf="!complete">
     <div class="col-lg"></div>
     <div class="col-lg-4" id="form">
         <h2 id="form-title">Registro del usuario</h2>

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+  sendData: boolean;
   error: boolean;
   show: boolean;
   constructor(private api: ApiService, private router: Router, private auth: AuthService) {
@@ -32,8 +33,9 @@ export class LoginComponent implements OnInit {
   }
 
   save() {
+    this.sendData = true;
+    this.show = false;
     this.api.login(this.user.email, this.user.password).subscribe( (result: LoginResult) => {
-      this.show = true;
       if (result.status) {
         this.error = false;
         localStorage.setItem('tokenJWT', result.token);
@@ -42,9 +44,11 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/me']);
       } else {
         this.error = true;
+        this.show = true;
         this.auth.updateStateSession(false);
         localStorage.removeItem('tokenJWT');
         console.log('login incorrecto');
+        this.sendData = false;
       }
     });
   }

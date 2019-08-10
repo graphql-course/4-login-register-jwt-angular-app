@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  complete: boolean;
   operation: number;
   message: string;
   register: RegisterData = {
@@ -25,8 +26,8 @@ export class RegisterComponent implements OnInit {
   }
 
   save() {
+    this.complete = true;
     this.api.register(this.register).subscribe(({data}) => {
-      console.log(data);
       const userResult: RegisterResult = data.register;
       if (userResult.status) {
         this.operation = 1;
@@ -34,11 +35,13 @@ export class RegisterComponent implements OnInit {
         this.operation = 2;
       }
       this.message = userResult.message;
+      this.complete = false;
 
     }, (error) => {
       console.log('error enviando el query: ', error);
       this.operation = 3;
       this.message = 'Error inesperado';
+      this.complete = false;
     });
   }
 
