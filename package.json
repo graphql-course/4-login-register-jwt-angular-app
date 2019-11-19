@@ -4,10 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
+    "dev": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "deploy": "ng run loginRegisterJWT:deploy",
     "prod": "ng build --prod --base-href=\"./\"",
     "publish.in.heroku": "npm run prod && git add . && git commit -m \"Publish in heroku\" && git push heroku master"
   },
@@ -21,6 +23,7 @@
     "@angular/platform-browser": "~8.1.0",
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
+    "@zeit/ng-deploy": "^0.3.0",
     "apollo-angular": "^1.6.0",
     "apollo-angular-link-http": "^1.8.0",
     "apollo-cache-inmemory": "^1.6.2",
@@ -29,6 +32,7 @@
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "nodemon": "^1.19.1",
+    "now-client": "^5.2.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
