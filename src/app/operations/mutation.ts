@@ -15,3 +15,9 @@ export const registerData = gql`
         }
     }
 `;
+
+export const resetPwd = gql`
+    mutation resetPwd($id: String!, $token: String!, $newPassword: String!) {
+        changePassword(id: $id, token: $token, newPassword: $newPassword)
+    }
+`;

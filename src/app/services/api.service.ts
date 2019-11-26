@@ -1,3 +1,4 @@
+import { resetPwd } from './../operations/mutation';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { getUsers, login, meData } from '../operations/query';
@@ -48,6 +49,18 @@ export class ApiService {
         mutation: registerData,
         variables: {
           user
+        }
+      });
+  }
+
+  resetPassword(id: number, token: string, newPassword: string) {
+    return this.apollo
+      .mutate({
+        mutation: resetPwd,
+        variables: {
+          id,
+          token,
+          newPassword
         }
       });
   }

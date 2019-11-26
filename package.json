@@ -28,6 +28,8 @@
     "apollo-angular-link-http": "^1.8.0",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
+    "apollo-link": "^1.2.13",
+    "apollo-link-error": "^1.1.12",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
