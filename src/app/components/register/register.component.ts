@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
   save() {
     this.complete = true;
     this.api.register(this.register).subscribe(({data}) => {
-      const userResult: RegisterResult = data.register;
+      const userResult: RegisterResult = (data as any).register;
       if (userResult.status) {
         this.operation = 1;
       } else {
